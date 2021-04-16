@@ -27,7 +27,7 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 8080;
 
 
-db.sync()
+db.sync() // adding a comment
     .then(() => {
         app.listen(port, () => {
             console.log(`Listening on port ${port}`);
