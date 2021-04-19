@@ -1,47 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Container } from 'semantic-ui-react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-class CreateContact extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            name: '',
-            phoneNumber: '',
-            email: '',
-            error: false
-        };
-    }
+export default function CreateContact() {
 
+    const [contact, setContact] = useState({
+        name: '',
+        phoneNumber: '',
+        email: '',
+        error: false
+    });
+    const history = useHistory();
 
-    handleSubmit = async e => {
+    async function handleSubmit(e) {
         e.preventDefault();
         // post to database
         try {
-            const newContact = await axios.post('/api/contacts', this.state)
-            console.log('contact created!');
+            const newContact = await axios.post('/api/contacts', contact);
+            history.push('/');
         } catch(err) {
-            this.setState({error: true});
+            setContact({...contact, error: true});
         }
 
     }
 
-    handleChange = (e, {name, value}) => {
-        this.setState({[name]: value});
+    function handleChange (e, {name, value}) {
+        setContact({...contact, [name]: value});
     }
 
-    render() {
-        return (
-            <Container>
-                {this.state.error && <h1>There was an error!</h1>}
-                <Form onSubmit={this.handleSubmit}>
+    return (
+        <Container>
+                {contact.error && <h1>There was an error!</h1>}
+                <Form onSubmit={handleSubmit}>
                     <Form.Group>
                         <Form.Input
                             name="name"
                             label="Name"
                             placeholder="Business or Individual Name"
-                            onChange={this.handleChange}
-                            value={this.state.name}
+                            onChange={handleChange}
+                            value={contact.name}
                         />
                     </Form.Group>
                     <Form.Group>
@@ -49,8 +47,8 @@ class CreateContact extends React.Component {
                             name="phoneNumber"
                             label="Phone Number"
                             placeholder="Phone Number"
-                            onChange={this.handleChange}
-                            value={this.state.phoneNumber}
+                            onChange={handleChange}
+                            value={contact.phoneNumber}
                         />
                     </Form.Group>
                     <Form.Group>
@@ -58,15 +56,13 @@ class CreateContact extends React.Component {
                             name="email"
                             label="Email Address"
                             placeholder="Email Address"
-                            onChange={this.handleChange}
-                            value={this.state.email}
+                            onChange={handleChange}
+                            value={contact.email}
                         />
                     </Form.Group>
                     <Button type="submit">Create Contact</Button>
                 </Form>
             </Container>
-        )
-    }
+    )
 }
 
-export default CreateContact;
