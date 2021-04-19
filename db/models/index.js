@@ -30,6 +30,9 @@ const BillingTransactions = db.define('Billing Transactions', {
     amount: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    description: {
+        type: DataTypes.STRING
     }
 });
 Bill.belongsToMany(Account, {through: BillingTransactions});
@@ -53,7 +56,8 @@ const InvoiceTransactions = db.define('Invoice Transactions', {
     amount: {
         type: DataTypes.INTEGER,
         allowNull: false
-    }
+    },
+    description: DataTypes.STRING
 });
 Invoice.belongsToMany(Account, {through: InvoiceTransactions});
 Account.belongsToMany(Invoice, {through: InvoiceTransactions});
@@ -76,7 +80,8 @@ const JournalTransactions = db.define('Journal Transactions', {
     amount: {
         type: DataTypes.INTEGER,
         allowNull: false
-    }
+    },
+    description: DataTypes.STRING
 });
 JournalEntry.belongsToMany(Account, {through: JournalTransactions});
 Account.belongsToMany(JournalEntry, {through: JournalTransactions});
