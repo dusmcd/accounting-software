@@ -2,6 +2,7 @@ export {default as Bills} from './bills/index';
 export {default as Invoices} from './invoices/index';
 export {default as Contacts} from './contacts/index';
 export {default as Journals } from './journals/index';
+export {default as Accounts} from './accounts/index';
 
 
 export function Home() {
