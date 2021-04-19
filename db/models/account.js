@@ -5,6 +5,10 @@ const Account = db.define('Account', {
     name: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    accountNumber: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 });
 
