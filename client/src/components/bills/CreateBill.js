@@ -7,12 +7,14 @@ class CreateBill extends React.Component {
         super();
         this.state = {
             date: '',
+            dueDate: '',
             description: '',
-            amount: 0
+            amount: 0,
+            invoiceNumber: ''
         }
     }
     handleDate = e => {
-        this.setState({date: e.target.value})
+        this.setState({[e.target.name]: e.target.value})
     }
     handleChange = (e, { name, value }) => {
         this.setState({[name]: value});
@@ -46,8 +48,18 @@ class CreateBill extends React.Component {
                     <Form.Group>
                         <Form.Field>
                             <label>Date</label>
-                            <input type="date" name="date" value={this.state.date} onChange={this.handleDate} />
+                            <input type="date" name="date" value={this.state.date} onChange={this.handleDate} id="date" />
                         </Form.Field>
+                        <Form.Field>
+                            <label>Due Date</label>
+                            <input type="date" name="dueDate" value={this.state.dueDate} onChange={this.handleDate} id="dueDate" />
+                        </Form.Field>
+                        <Form.Input
+                            label="Invoice Number"
+                            onChange={this.handleChange}
+                            name="invoiceNumber"
+                            value={this.state.invoiceNumber}
+                        />
                     </Form.Group>
                     <Form.Group>
                         <Form.TextArea
