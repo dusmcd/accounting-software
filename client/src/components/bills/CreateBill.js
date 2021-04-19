@@ -26,7 +26,8 @@ class CreateBill extends React.Component {
     }
 
     render() {
-        const accounts = [ // this will come from the DB . . . just a placeholder for now
+        // these will come from DB; just a placeholder for now
+        const accounts = [
             {key: 1, text: 'Consulting', value: 'consulting'},
             {key: 2, text: 'Supplies', value: 'supplies'},
             {key: 3, text: 'Training', value: 'training'}

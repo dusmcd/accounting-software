@@ -12,6 +12,12 @@ const { DataTypes } = require('sequelize');
 Type.hasMany(Account);
 Account.belongsTo(Type);
 
+Contact.hasMany(Bill);
+Bill.belongsTo(Contact);
+
+Contact.hasMany(Invoice);
+Invoice.belongsTo(Contact);
+
 const BillingTransactions = db.define('Billing Transactions', {
     BillId: {
         type: DataTypes.INTEGER,

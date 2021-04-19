@@ -8,7 +8,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use((req, res, next) => {
-    console.log(req.path)
+    console.log(req.method + ': ' + req.path);
     next();
 });
 
@@ -27,7 +27,7 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 8080;
 
 
-db.sync({ force: true }) // adding a comment
+db.sync() // adding a comment
     .then(() => {
         app.listen(port, () => {
             console.log(`Listening on port ${port}`);
