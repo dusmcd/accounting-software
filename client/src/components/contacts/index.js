@@ -1,9 +1,22 @@
 import React from 'react';
+import { Link, Switch, Route, useRouteMatch } from 'react-router-dom';
+import CreateContact from './CreateContact';
 
-class Contacts extends React.Component {
-    render() {
-        return <h1>This is the Contacts page</h1>
-    }
+function Contacts () {
+    const match = useRouteMatch();
+    return (
+        <div>
+            <ul>
+                <li><Link to={`${match.url}/create`}>Create Contact</Link></li>
+            </ul>
+
+            <Switch>
+                <Route path={`${match.path}/create`}>
+                    <CreateContact />
+                </Route>
+            </Switch>
+        </div>
+    )
 }
 
 export default Contacts;

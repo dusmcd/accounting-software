@@ -6,6 +6,10 @@ const Bill = db.define('Bill', {
         type: DataTypes.DATE,
         allowNull: false
     },
+    dueDate: {
+        type: DataTypes.DATE,
+        allowNull: false
+    },
     invoiceNumber: {
         type: DataTypes.STRING,
         allowNull: false
