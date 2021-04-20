@@ -12,9 +12,14 @@ router.post('/', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     try {
-        const accounts = await Type.findAll({
-            include: Account
-        });
+        let accounts;
+        if (req.query.getDetails === 'true') {
+            accounts = await Type.findAll({
+                include: Account
+            });
+        } else {
+            accounts = await Type.findAll();
+        }
         res.json(accounts);
     } catch(err) {
         next(err);
