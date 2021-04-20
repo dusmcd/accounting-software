@@ -1,5 +1,5 @@
 import { Switch, Route } from 'react-router-dom';
-import { Bills, Home, Invoices, Journals, Contacts } from './components';
+import { Bills, Home, Invoices, Journals, Contacts, Accounts } from './components';
 
 function Routes() {
     return (
@@ -15,6 +15,9 @@ function Routes() {
             </Route>
             <Route path="/journals">
                 <Journals />
+            </Route>
+            <Route path='/coa'>
+                <Accounts />
             </Route>
             <Route exact path="/">
                 <Home />

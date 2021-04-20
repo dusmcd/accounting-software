@@ -19,6 +19,9 @@ function Header() {
                 <Menu.Item>
                     <Link to="/contacts">Contacts</Link>
                 </Menu.Item>
+                <Menu.Item>
+                    <Link to="/coa">Chart of Accounts</Link>
+                </Menu.Item>
             </Menu>
     )
 }
