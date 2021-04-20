@@ -18,6 +18,7 @@ export default function CreateContact() {
         // post to database
         try {
             const newContact = await axios.post('/api/contacts', contact);
+            // eventually will go to view contact page
             history.push('/');
         } catch(err) {
             setContact({...contact, error: true});

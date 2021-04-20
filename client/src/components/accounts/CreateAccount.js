@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Form, Button } from 'semantic-ui-react';
+import { useHistory } from 'react-router-dom'
 import axios from 'axios';
 
 export default function CreateAccount() {
     const [account, setAccount] = useState({
         name: '',
-        accountNumber: 0
+        accountNumber: 0,
+        typeId: 0,
+        error: false
     });
-
+    const history = useHistory();
     const [types, setTypes] = useState([]);
 
     useEffect(() => {
@@ -26,13 +29,20 @@ export default function CreateAccount() {
         setAccount({...account, [name]: value});
     }
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        console.log('handleSubmit called!');
+    async function handleSubmit(e) {
+        try {
+            e.preventDefault();
+            await axios.post('/api/accounts', account)
+            history.push('/coa');
+        } catch(err) {
+            console.error(err);
+            setAccount({...account, error: true});
+        }
     }
 
     return (
         <Form onSubmit={handleSubmit}>
+            {account.error && <h1>Error occurred!!</h1>}
             <Form.Group>
                 <Form.Input
                     name="name"
@@ -47,6 +57,8 @@ export default function CreateAccount() {
                     options={types}
                     placeholder="Select Account Type"
                     label="Account Type"
+                    onChange={handleChange}
+                    name="typeId"
                 />
             </Form.Group>
             <Form.Group>
