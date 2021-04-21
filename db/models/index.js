@@ -98,5 +98,8 @@ module.exports = {
     Contact,
     Invoice,
     JournalEntry,
-    Type
+    Type,
+    BillingTransactions,
+    InvoiceTransactions,
+    JournalTransactions
 };
