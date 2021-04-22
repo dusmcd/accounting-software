@@ -15,7 +15,7 @@ export default function CreateAccount() {
 
     useEffect(() => {
         async function fetchTypes() {
-            const res = await axios.get('/api/accounts?getDetail=false')
+            const res = await axios.get('/api/accounts/types?getDetails=false')
             const typeList = await res.data;
             setTypes(typeList.map(type => {
                 return {value: type.id, text: type.accountType, key: type.id}

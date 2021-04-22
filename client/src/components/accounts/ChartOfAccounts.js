@@ -6,7 +6,7 @@ export default function ChartOfAccounts() {
 
     useEffect(() => {
         async function fetchAccounts() {
-            const res = await axios.get('/api/accounts?getDetails=true');
+            const res = await axios.get('/api/accounts/types?getDetails=true');
             const data = await res.data;
             setAccountTypes(data);
         }

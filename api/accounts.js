@@ -10,7 +10,17 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+
 router.get('/', async (req, res, next) => {
+    try {
+        const accounts = await Account.findAll();
+        res.json(accounts);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/types', async (req, res, next) => {
     try {
         let accounts;
         if (req.query.getDetails === 'true') {
