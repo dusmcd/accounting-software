@@ -54,8 +54,9 @@ export default function CreateBill() {
     async function handleSubmit(e) {
         try {
             e.preventDefault();
-            await axios.post('/api/bills', bill);
-            history.push('/');
+            const res = await axios.post('/api/bills', bill);
+            const data = await res.data;
+            history.push(`/bills/${data}`);
         } catch(err) {
             setBill({...bill, error: true});
         }
