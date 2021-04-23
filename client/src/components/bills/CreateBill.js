@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Button, Container } from 'semantic-ui-react';
+import { useHistory } from 'react-router-dom'
 
 
 
@@ -11,11 +12,13 @@ export default function CreateBill() {
         invoiceNumber: '',
         transactions: {},
         ContactId: 0,
+        error: false
     });
 
     const [accounts, setAccounts] = useState([]);
     const [contacts, setContacts] = useState([]);
     const [rows, setRows] = useState([1]);
+    const history = useHistory();
 
 
     useEffect(() => {
@@ -45,16 +48,22 @@ export default function CreateBill() {
         setBill({...bill, [name]: value});
     }
     function handleAccounts(e, { name, value }) {
-        setBill({...bill, transactions: {...bill.transactions, [name]: value}})
+        const sentValue = name.includes('amount') ? Number(value) : value;
+        setBill({...bill, transactions: {...bill.transactions, [name]: sentValue}})
     }
-    function handleSubmit(e) {
-        // post state to database
-        e.preventDefault();
-        console.log('Data from form:', bill);
+    async function handleSubmit(e) {
+        try {
+            e.preventDefault();
+            await axios.post('/api/bills', bill);
+            history.push('/');
+        } catch(err) {
+            setBill({...bill, error: true});
+        }
     }
 
     return (
         <Container>
+            {bill.error && <h1>There was an error!!</h1>}
             <Form onSubmit={handleSubmit}>
                 <Form.Group>
                     <Form.Select
@@ -88,12 +97,10 @@ export default function CreateBill() {
                                 label="Description"
                                 onChange={handleAccounts}
                                 name={`description${i}`}
-                                // value={bill.transactions[`description${i}`]}
                             />
                             <Form.Input
                                 label="Amount"
                                 placeholder="Please enter a number"
-                                // value={bill.transactions[`amount${i}`]}
                                 onChange={handleAccounts}
                                 name={`amount${i}`}
                             />

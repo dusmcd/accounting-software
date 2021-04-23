@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Bill, BillingTransactions, db }  = require('../db');
-const { createTransactions } = require('./helpers');
+const { createTransactions, formatTransactions } = require('./helpers');
 
 router.post('/', async (req, res, next) => {
     try {
@@ -11,7 +11,8 @@ router.post('/', async (req, res, next) => {
                 invoiceNumber: req.body.invoiceNumber,
                 ContactId: req.body.ContactId
             }, { transaction: t });
-            const newTransactions = createTransactions(req.body.transactions, req.body.invoiceNumber, newBill.id);
+            const formattedTransactions = formatTransactions(req.body.transactions);
+            const newTransactions = createTransactions(formattedTransactions, req.body.invoiceNumber, newBill.id);
             await Promise.all(newTransactions.map(billingT => BillingTransactions.create(billingT, { transaction: t })))
             
             return newBill.id;

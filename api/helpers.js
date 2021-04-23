@@ -14,4 +14,14 @@ function createTransactions(transactionList, invoiceNumber, billId) {
 
 }
 
-module.exports = { createTransactions };
+function formatTransactions(transactions) {
+    const result = [];
+    Object.keys(transactions).forEach(key => {
+        const resultIndex = key[key.length - 1];
+        const property = key.slice(0, key.length - 1);
+        result[resultIndex] = {...result[resultIndex],[property]: transactions[key] };
+    })
+    return result;
+}
+
+module.exports = { createTransactions, formatTransactions };

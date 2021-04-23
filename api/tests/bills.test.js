@@ -1,4 +1,4 @@
-const { createTransactions } = require('../helpers');
+const { createTransactions, formatTransactions } = require('../helpers');
 
 describe('createTransactions function', () => {
     const transactionList = [
@@ -22,3 +22,27 @@ describe('createTransactions function', () => {
         expect(createTransactions(transactionList, 9999, 100)[3]).toEqual(apTransaction);
     })
 });
+
+describe('formatTransactions function', () => {
+    const transactions = {description0: 'something', amount0: -50, AccountId0: 1, amount1: 10, AccountId1: 2};
+
+    test('changes given transaction object to an array', () => {
+        expect(Array.isArray(formatTransactions(transactions))).toBeTruthy();
+    });
+
+    test('outputs array in specified format based on given object keys', () => {
+        const expectedArray = [{
+            description: 'something',
+            amount: 50,
+            AccountId: 1
+        }, {
+            amount: 10,
+            AccountId: 2
+        }]
+        expect(formatTransactions(transactions)).toEqual(expectedArray);
+    });
+
+    test('casts amount property to a Number type', () => {
+        expect(typeof formatTransactions(transactions)[0].amount).toBe('string')
+    });
+})
