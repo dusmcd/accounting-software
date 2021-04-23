@@ -20,8 +20,8 @@ export default function ShowBill(props) {
             const data = await res.data;
             // get transactions and dates into a good format
             setBill({
-                date: data.date,
-                dueDate: data.dueDate,
+                date: formatDate(data.date),
+                dueDate: formatDate(data.dueDate),
                 invoiceNumber: data.invoiceNumber,
                 transactions: data.Accounts,
                 Contact: data.Contact
@@ -29,7 +29,7 @@ export default function ShowBill(props) {
         }
         fetchBill();
     }, [match.params.id])
-
+    const totalAmount = bill.transactions.length && -bill.transactions[bill.transactions.length - 1]['Billing Transactions'].amount;
     return (
         <Container>
             <h2>{bill.Contact.name}</h2>
@@ -51,13 +51,26 @@ export default function ShowBill(props) {
                             <Table.Row key={t.id}>
                                 <Table.Cell>{t['Billing Transactions'].description}</Table.Cell>
                                 <Table.Cell>{`${t.accountNumber} - ${t.name}`}</Table.Cell>
-                                <Table.Cell>{t['Billing Transactions'].amount}</Table.Cell>
+                                <Table.Cell>${t['Billing Transactions'].amount}</Table.Cell>
                             </Table.Row>
                         )
                     }
+                    return null;
                 })}
                 </Table.Body>
+                <Table.Footer>
+                    <Table.Row>
+                        <Table.HeaderCell colSpan='3'>
+                            <h3 style={{textAlign: 'right'}}>Total Amount: ${totalAmount} </h3>
+                        </Table.HeaderCell>
+                    </Table.Row>
+                </Table.Footer>
             </Table>
         </Container>
     )
+}
+
+function formatDate(dateStr) {
+    const dateObj = new Date(dateStr);
+    return `${dateObj.getMonth()+1}/${dateObj.getDate()}/${dateObj.getFullYear()}`
 }
