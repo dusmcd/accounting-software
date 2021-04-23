@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Bill, BillingTransactions, db }  = require('../db');
+const { Bill, BillingTransactions, db, Account, Contact }  = require('../db');
 const { createTransactions, formatTransactions } = require('./helpers');
 
 router.post('/', async (req, res, next) => {
@@ -19,6 +19,17 @@ router.post('/', async (req, res, next) => {
         })
         res.json(result);
 
+    } catch(err) {
+        next(err);
+    }
+});
+
+router.get('/:id', async (req, res, next) => {
+    try {
+        const bill = await Bill.findByPk(req.params.id, {
+            include: [Account, Contact]
+        });
+        res.json(bill);
     } catch(err) {
         next(err);
     }

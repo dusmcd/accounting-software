@@ -1,5 +1,6 @@
 import React from 'react';
 import CreateBill from './CreateBill';
+import ShowBill from './ShowBill';
 import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 function Bill() {
@@ -10,8 +11,11 @@ function Bill() {
                 <li><Link to={`${match.url}/create`}>Create Bill</Link></li>
             </ul>
             <Switch>
-                <Route path={`${match.path}/create`}>
+                <Route exact path={`${match.path}/create`}>
                     <CreateBill />
+                </Route>
+                <Route path={`${match.path}/:id`}>
+                    <ShowBill />
                 </Route>
             </Switch>
         </div>
