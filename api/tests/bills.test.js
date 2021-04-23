@@ -24,7 +24,7 @@ describe('createTransactions function', () => {
 });
 
 describe('formatTransactions function', () => {
-    const transactions = {description0: 'something', amount0: -50, AccountId0: 1, amount1: 10, AccountId1: 2};
+    const transactions = {description0: 'something', amount0: 50, AccountId0: 1, amount1: 10, AccountId1: 2};
 
     test('changes given transaction object to an array', () => {
         expect(Array.isArray(formatTransactions(transactions))).toBeTruthy();
@@ -42,7 +42,5 @@ describe('formatTransactions function', () => {
         expect(formatTransactions(transactions)).toEqual(expectedArray);
     });
 
-    test('casts amount property to a Number type', () => {
-        expect(typeof formatTransactions(transactions)[0].amount).toBe('string')
-    });
+
 })
