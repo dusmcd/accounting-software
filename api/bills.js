@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Bill, BillingTransactions, db, Account, Contact }  = require('../db');
+const { Op } = require('sequelize');
 const { createTransactions, formatTransactions } = require('./helpers');
 
 router.post('/', async (req, res, next) => {
@@ -27,7 +28,14 @@ router.post('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
     try {
         const bill = await Bill.findByPk(req.params.id, {
-            include: [Account, Contact]
+            include: [{
+                model: Account,
+                where: {
+                    id: {
+                        [Op.ne]: 7
+                    }
+                }
+            }, Contact]
         });
         res.json(bill);
     } catch(err) {

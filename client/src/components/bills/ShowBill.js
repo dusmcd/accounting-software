@@ -29,7 +29,8 @@ export default function ShowBill(props) {
         }
         fetchBill();
     }, [match.params.id])
-    const totalAmount = bill.transactions.length && -bill.transactions[bill.transactions.length - 1]['Billing Transactions'].amount;
+    const BillingTransactions = 'Billing Transactions';
+    const totalAmount = bill.transactions.length && bill.transactions.reduce((sum, current) => sum + current[BillingTransactions].amount, 0);
     return (
         <Container>
             <h2>{bill.Contact.name}</h2>
@@ -46,16 +47,14 @@ export default function ShowBill(props) {
                 </Table.Header>
                 <Table.Body>
                 {!!bill.transactions && bill.transactions.map((t, i) => {
-                    if (i !== bill.transactions.length - 1) {
-                        return (
-                            <Table.Row key={t.id}>
-                                <Table.Cell>{t['Billing Transactions'].description}</Table.Cell>
-                                <Table.Cell>{`${t.accountNumber} - ${t.name}`}</Table.Cell>
-                                <Table.Cell>${t['Billing Transactions'].amount}</Table.Cell>
-                            </Table.Row>
-                        )
-                    }
-                    return null;
+                    return (
+                        <Table.Row key={t.id}>
+                            <Table.Cell>{t[BillingTransactions].description}</Table.Cell>
+                            <Table.Cell>{`${t.accountNumber} - ${t.name}`}</Table.Cell>
+                            <Table.Cell>${t[BillingTransactions].amount}</Table.Cell>
+                        </Table.Row>
+                    )
+                    
                 })}
                 </Table.Body>
                 <Table.Footer>
