@@ -13,5 +13,6 @@ router.get('/accounts-contacts', async (req, res, next) => {
 router.use('/contacts', require('./contacts'));
 router.use('/accounts', require('./accounts'));
 router.use('/bills', require('./bills'));
+router.use('/invoices', require('./invoices'));
 
 module.exports = router;

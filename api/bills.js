@@ -32,7 +32,7 @@ router.get('/:id', async (req, res, next) => {
                 model: Account,
                 where: {
                     id: {
-                        [Op.ne]: 7
+                        [Op.ne]: 7 // Accounts Payable Id number
                     }
                 }
             }, Contact]

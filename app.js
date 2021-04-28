@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const {db} = require('./db');
+
+if (process.env.NODE_ENV === 'development') {
+    require('./secrets');
+}
 
 // common middleware
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -25,12 +28,8 @@ app.use((err, req, res, next) => {
     res.status(500).json(err.message);
 });
 
-const port = process.env.PORT || 8080;
 
 
-db.sync() // adding a comment
-    .then(() => {
-        app.listen(port, () => {
-            console.log(`Listening on port ${port}`);
-        });
-    })
+module.exports = app;
+
+
